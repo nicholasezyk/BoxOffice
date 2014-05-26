@@ -140,15 +140,50 @@ public class Dataset {
 					if (catalogTitles.containsValue(title) == false)
 					{
 						Movie m = new Movie(title, year, week, studio, range);
-						m.push(thisWeek, year, week, cumulative, theaterCount);
+						m.push(thisWeek, year, week, cumulative, weekGross, theaterCount);
+						if (_budget.equals("-") == false)
+						{
+							m.setBudget(budget);
+						}
 					}
 					else
 					{
 						int ident = catalogTitles.getKey(title);
-						catalogMovies.get(ident).push(thisWeek, year, week, cumulative, theaterCount);
+						catalogMovies.get(ident).push(thisWeek, year, week, cumulative, weekGross, theaterCount);
+						if (_budget.equals("-") == false && catalogMovies.get(ident).budget != -100)
+						{
+							catalogMovies.get(ident).setBudget(budget);
+						}
 					}
 					
+					
+					
 					page = page.substring(page.indexOf("</tr>") + "</tr>".length());
+					
+					if ((count + 1) % 2 == 0)
+					{
+						if (page.indexOf("<tr bgcolor=\"#f4f4ff\">") == -1)
+						{
+							break collect;
+						}
+						else
+						{
+							page = page.substring(page.indexOf("<tr bgcolor=\"#f4f4ff\">") + "<tr bgcolor=\"#f4f4ff\">".length());
+						}
+					}
+					else
+					{
+						if (page.indexOf("<tr bgcolor=\"#ffffff\">") == -1)
+						{
+							break collect;
+						}
+						else
+						{
+							page = page.substring(page.indexOf("<tr bgcolor=\"#ffffff\">") + "<tr bgcolor=\"#ffffff\">".length());
+						}
+					}
+					
+					count++;
 					
 					
 					

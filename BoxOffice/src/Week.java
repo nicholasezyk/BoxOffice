@@ -1,13 +1,17 @@
 import java.lang.Exception;
 import java.util.Vector;
 
+import org.apache.commons.collections4.bidimap.TreeBidiMap;
+
 public class Week {
 	public boolean nonInit;
 	
 	public int year;
 	public int week;
 	
-	public Vector<Movie> films = new Vector<Movie>(10, 10);
+	public TreeBidiMap<Integer, Integer> grossNominal = new TreeBidiMap();
+	public TreeBidiMap<Integer, Integer> grossReal = new TreeBidiMap();
+	public TreeBidiMap<Integer, Integer> theaters = new TreeBidiMap();
 	
 	public String start;
 	public String end;
