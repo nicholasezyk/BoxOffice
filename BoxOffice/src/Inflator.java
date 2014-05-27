@@ -3,7 +3,7 @@
  */
 public class Inflator {
 
-	public double inflate(int inf)
+	public static double inflate(int inf)
 	{
 		if (inf < 1982)
 		{

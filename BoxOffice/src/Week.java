@@ -11,7 +11,7 @@ public class Week {
 	
 	public TreeBidiMap<Integer, Integer> grossNominal = new TreeBidiMap();
 	public TreeBidiMap<Integer, Integer> grossReal = new TreeBidiMap();
-	public TreeBidiMap<Integer, Integer> theaters = new TreeBidiMap();
+	public TreeBidiMap<Integer, Integer> theatres = new TreeBidiMap();
 	
 	public String start;
 	public String end;
@@ -43,6 +43,12 @@ public class Week {
 			if (wk < 10) set = "0";
 		}
 
+	}
+	
+	public void plop(int position, int nominal, int theatres)
+	{
+		grossNominal.put(position, nominal);
+		grossReal.put(position, (int) (nominal*Inflator.inflate(this.year)));
 	}
 
 

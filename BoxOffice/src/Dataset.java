@@ -134,15 +134,23 @@ public class Dataset {
 						budget = Integer.parseInt(_budget);
 					}
 					page = page.substring(page.indexOf("<font size=\"2\">") + "<font size=\"2\">".length());
-					int thisWeek = Integer.parseInt(page.substring(0, page.indexOf('<')));
-					if (thisWeek < 0) thisWeek *= -1;
+					int thisWeek = 0;
+					if (page.substring(0, page.indexOf('<')) == "-")
+					{
+						thisWeek = 0;
+					}
+					else
+					{
+						thisWeek = Integer.parseInt(page.substring(0, page.indexOf('<')));
+					}
 					
 					if (catalogTitles.containsValue(title) == false)
 					{
 						Movie m = new Movie(title, year, week, studio, range);
 						m.push(thisWeek, year, week, cumulative, weekGross, theaterCount);
-						if (_budget.equals("-") == false)
+						if (budget != -100)
 						{
+							budget *= 1000000;
 							m.setBudget(budget);
 						}
 					}
@@ -159,6 +167,10 @@ public class Dataset {
 					
 					
 					page = page.substring(page.indexOf("</tr>") + "</tr>".length());
+					
+					/**
+					 * @todo account for new movies <tr bgcolor="#ffff99">
+					 */
 					
 					if ((count + 1) % 2 == 0)
 					{

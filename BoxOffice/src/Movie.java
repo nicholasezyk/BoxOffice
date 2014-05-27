@@ -1,7 +1,18 @@
 import java.util.Vector;
 
+/**
+ * 
+ * @author nicholasezyk
+ * @todo Put in some sort of boolean mechanism to
+ * 		account for the fact that some films debut
+ * 		with week "1" and some debut with a "-" then
+ * 		"1" after that.
+ *
+ */
+
 public class Movie {
 	public boolean nonInit;
+	public boolean offset;
 	
 	public String title;
 	public int ID = -100;
