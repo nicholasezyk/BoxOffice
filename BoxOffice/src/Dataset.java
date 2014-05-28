@@ -19,6 +19,20 @@ import org.apache.commons.collections4.bidimap.TreeBidiMap;
 
 public class Dataset {
 	
+	/**
+	 * @todo This needs to be revamped almost wholly.
+	 * The Dataset class will contain maps for title to movie, title to debut yearweek, and title to
+	 * 		URL String.
+	 * The parse will go by week, dipping into movies by their URLs to track their weekly progress.
+	 * 
+	 * The existence of lifetime grosses over multiple releases will necessitate a means of counting and
+	 * inflation adjusting over multiple releases--perhaps an array linking to alternate releases?
+	 * 
+	 * There will be a passthrough so that when the theatrical run history of the Movie is populated,
+	 * the Week position in which it resides will be filled as well.
+	 * 
+	 */
+	
 	public static TreeBidiMap<Integer, String> catalogTitles = new TreeBidiMap();
 	public static Map<Integer, Movie>  catalogMovies;
 	

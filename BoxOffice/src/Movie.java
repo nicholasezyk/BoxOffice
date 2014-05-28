@@ -12,7 +12,6 @@ import java.util.Vector;
 
 public class Movie {
 	public boolean nonInit;
-	public boolean offset;
 	
 	public String title;
 	public int ID = -100;
