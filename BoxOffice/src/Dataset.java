@@ -2,6 +2,7 @@ import java.util.Vector;
 import java.util.Map;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
@@ -31,6 +32,8 @@ public class Dataset {
 	 * There will be a passthrough so that when the theatrical run history of the Movie is populated,
 	 * the Week position in which it resides will be filled as well.
 	 * 
+	 * There needs to be a check in the Summary page for limited opening weekends.
+	 * 
 	 */
 	
 	public static TreeBidiMap<Integer, String> catalogTitles = new TreeBidiMap();
@@ -40,6 +43,13 @@ public class Dataset {
 	
 	public static void main(String[] args)
 	{
+		
+		
+		
+		/********************************
+		 * deprecated parse algorithm
+		 * to be deleted upon replacement
+		 */
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Select year");
 		int year = sc.nextInt();
@@ -238,6 +248,36 @@ public class Dataset {
 				else week++;
 			}
 		}
+	}
+	
+	public void pullFilmData(String filmURL)
+	{
+		String bom = "http://boxofficemojo.com";
+		
+		String raw = "";
+		try
+		{
+			raw = GrabHTML.pull(new URL(filmURL));
+		} catch (MalformedURLException we)
+		{
+			
+		} catch (Exception me)
+		{
+			
+		}
+		
+		snip(raw, "<!--------------------------Site Body---------------------------------->");
+		
+		
+		
+	}
+	
+	public void snip(String set, String place)
+	{
+		if (set.indexOf(place) != -1)
+		{
+			set = set.substring(set.indexOf(place) + place.length());
+		}		
 	}
 	
 	

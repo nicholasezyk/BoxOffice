@@ -19,18 +19,33 @@ public class Movie {
 	public int debutYear;
 	public int debutWeek;
 	
+	public String dataCurrentTo;
+	
+	public String releaseDate;
+	public String closeDate;
+	
 	public String dayRange;
 	
 	public Vector<String> date = new Vector<String>(10, 10);
 	public Vector<Integer> gross = new Vector<Integer>(10, 10);
-	public Vector<Integer> aggregate = new Vector<Integer>(10, 10);
 	public Vector<Integer> theatres = new Vector<Integer>(10, 10);
 	
 	public int RTcriticScore = -100;
 	public int RTaudienceScore = -100;
 	public int RTnumCritics = -100;
 	
+	public int nominalGross;
+	public int realGross;
+	public int nominalLifetimeGross;
+	public int realLifetimeGross;
+	public int nominalWorldwideGross;
+	public int realWorldwideGross;
+	
+	public Vector<String> genres = new Vector<String>(6, 1);
+	
 	public int budget = -100;
+	
+	public int runtime;
 	
 	public BTernary flop = new BTernary(0);
 	
@@ -101,7 +116,7 @@ public class Movie {
 		studio = s;
 	}
 	
-	public void push(int pl, int y, int w, int a, int g, int t)
+	public void push(int pl, int y, int w, int g, int t)
 	{
 		String yearWeek = "";
 		if (w < 10)
@@ -120,7 +135,6 @@ public class Movie {
 		}
 		this.date.setElementAt(yearWeek, pl);
 		this.gross.setElementAt(g, pl);
-		this.aggregate.setElementAt(a, pl);
 		this.theatres.setElementAt(t, pl);
 	}
 	

@@ -18,6 +18,10 @@ public class Week {
 	
 	public int nominalGross;
 	public int realGross;
+	public int nominalWorldwideGross;
+	public int realWorldwideGross;
+	
+	public Vector<String> genres = new Vector<String>(6, 1);
 	
 //	public static void main(String[] args)
 //	{
