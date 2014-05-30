@@ -36,8 +36,8 @@ public class Dataset {
 	 * 
 	 */
 	
-	public static TreeBidiMap<Integer, String> catalogTitles = new TreeBidiMap();
-	public static Map<Integer, Movie>  catalogMovies;
+	//public static TreeBidiMap<Integer, String> catalogTitles = new TreeBidiMap();
+	public static Map<String, Movie>  catalogMovies;
 	
 	public static boolean running = true;
 	
@@ -171,7 +171,7 @@ public class Dataset {
 					if (catalogTitles.containsValue(title) == false)
 					{
 						Movie m = new Movie(title, year, week, studio, range);
-						m.push(thisWeek, year, week, cumulative, weekGross, theaterCount);
+						//m.push(thisWeek, year, week, cumulative, weekGross, theaterCount);
 						if (budget != -100)
 						{
 							budget *= 1000000;
@@ -181,7 +181,7 @@ public class Dataset {
 					else
 					{
 						int ident = catalogTitles.getKey(title);
-						catalogMovies.get(ident).push(thisWeek, year, week, cumulative, weekGross, theaterCount);
+						//catalogMovies.get(ident).push(thisWeek, year, week, cumulative, weekGross, theaterCount);
 						if (_budget.equals("-") == false && catalogMovies.get(ident).budget != -100)
 						{
 							catalogMovies.get(ident).setBudget(budget);
@@ -266,18 +266,32 @@ public class Dataset {
 			
 		}
 		
-		snip(raw, "<!--------------------------Site Body---------------------------------->");
+		raw = snip(raw, "<!--------------------------Site Body---------------------------------->");
+		raw = snip(raw, "<font face=\"Verdana\" size=\"6\"><b>");
+		
+		String filmTitle; 
+		filmTitle = mine(raw, "</b>");
+		
+		
 		
 		
 		
 	}
 	
-	public void snip(String set, String place)
+	public String snip(String set, String place)
 	{
 		if (set.indexOf(place) != -1)
 		{
-			set = set.substring(set.indexOf(place) + place.length());
+			return set = set.substring(set.indexOf(place) + place.length());
 		}		
+		else return null;
+	}
+	
+	public String mine(String set, String stop)
+	{
+		String out = set.substring(0, set.indexOf(stop));
+		snip(set, stop);
+		return out;
 	}
 	
 	
