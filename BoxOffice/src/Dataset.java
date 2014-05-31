@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.Vector;
 import java.util.Map;
 import java.io.BufferedReader;
@@ -170,12 +171,12 @@ public class Dataset {
 					
 					if (catalogTitles.containsValue(title) == false)
 					{
-						Movie m = new Movie(title, year, week, studio, range);
+						Movie m = new Movie(title);
 						//m.push(thisWeek, year, week, cumulative, weekGross, theaterCount);
 						if (budget != -100)
 						{
 							budget *= 1000000;
-							m.setBudget(budget);
+							m.budget = budget;
 						}
 					}
 					else
@@ -184,7 +185,7 @@ public class Dataset {
 						//catalogMovies.get(ident).push(thisWeek, year, week, cumulative, weekGross, theaterCount);
 						if (_budget.equals("-") == false && catalogMovies.get(ident).budget != -100)
 						{
-							catalogMovies.get(ident).setBudget(budget);
+							catalogMovies.get(ident).budget = budget;
 						}
 					}
 					
@@ -251,8 +252,10 @@ public class Dataset {
 	}
 	
 	public void pullFilmData(String filmURL)
+	//to be changed to Movie return type
 	{
 		String bom = "http://boxofficemojo.com";
+		String bomMovies = bom + "/movies/";
 		
 		String raw = "";
 		try
@@ -272,6 +275,33 @@ public class Dataset {
 		String filmTitle; 
 		filmTitle = mine(raw, "</b>");
 		
+		Movie mov = new Movie(filmTitle);
+		raw = snip(raw, "Domestic Total Gross: <b>");
+		String nGross = mine(raw, "</b>");
+		int _nominalGross = parseDollarAmount(nGross);
+		String dLGross = " ";
+		String releasesLink = " ";
+		int _domesticLifetimeGross = 0;
+		if (raw.indexOf("Domestic Lifetime Gross:") != -1)
+		{
+			raw = snip(raw, "<a href=\"");
+			releasesLink = mine(raw, "\"");
+			raw = snip(raw, "Domestic Lifetime Gross: $");
+			dLGross = mine(raw, "</b>");
+			_domesticLifetimeGross = parseDollarAmount(dLGross);
+		}
+		
+		raw = snip(raw, "Distributor: <b><a href=\"");
+		String distributorLink = mine(raw, "\">");
+		String _distributor = mine(raw, "</a>");
+		raw = snip(raw, ".htm\">");
+		String rDate = mine(raw, "</a>");
+		Calendar releaseDate = parseDate(rDate);
+		raw = snip(raw, "Genre: <b>");
+		
+		
+		
+		
 		
 		
 		
@@ -284,7 +314,7 @@ public class Dataset {
 		{
 			return set = set.substring(set.indexOf(place) + place.length());
 		}		
-		else return null;
+		else return set;
 	}
 	
 	public String mine(String set, String stop)
@@ -294,5 +324,93 @@ public class Dataset {
 		return out;
 	}
 	
+	public int parseDollarAmount(String dollarAmount)
+	{
+		if (dollarAmount.indexOf("$") > -1) dollarAmount = snip(dollarAmount, "$");
+		while (dollarAmount.indexOf(",") != -1)
+		{
+			int pt = dollarAmount.indexOf(",");
+			dollarAmount = dollarAmount.substring(0, pt) + dollarAmount.substring(pt + 1);
+		}
+		return Integer.parseInt(dollarAmount);
+	}
+	
+	
+	public Calendar parseDate(String date)
+	{
+		int m = 0;
+		int d = 0;
+		int y = 0;
+		date = date.toLowerCase();
+		if (date.indexOf("january") != -1)
+		{
+			m = Integer.parseInt("1");
+			date = snip(date, " ");
+		}
+		else if (date.indexOf("february") != -1)
+		{
+			m = Integer.parseInt("2") ; date = snip(date, " ");
+		}
+		else if (date.indexOf("march") != -1)
+		{
+			m = Integer.parseInt("3"); date=snip(date," ");
+		}
+		else if (date.indexOf("april") != -1)
+		{
+			m = Integer.parseInt("4");
+			date = snip(date, " ");
+		}
+		else if (date.indexOf("may") != -1)
+		{
+			m = Integer.parseInt("5");
+			
+			date =snip(date, " ");
+		}
+		else if (date.indexOf("june") != -1)
+		{
+			m = Integer.parseInt("6");
+			
+			date= snip(date, " ");
+		}
+		else if (date.indexOf("july") != -1)
+		{
+			m = Integer.parseInt("7");
+			date = snip(date, " ");
+		}
+		else if (date.indexOf("august") != -1)
+		{
+			m = Integer.parseInt("8");
+			date = snip(date, " ");
+		}
+		else if (date.indexOf("september") != -1)
+		{
+			m = Integer.parseInt("9");
+			date = snip(date, " ");
+		}
+		else if (date.indexOf("october") != -1)
+		{
+			m = Integer.parseInt("10");
+			date = snip(date, " ");
+		}
+		else if (date.indexOf("november") != -1)
+		{
+			m = Integer.parseInt("11");
+			date = snip(date, " ");
+		}
+		else if (date.indexOf("december") != -1)
+		{
+			m = Integer.parseInt("12");
+			date = snip(date, " ");
+		}
+		
+		d = Integer.parseInt(mine(date, ","));
+		date = snip(date, " ");
+		
+		y = Integer.parseInt(date);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(y, m, d);
+		return cal;
+	}
 	
 }

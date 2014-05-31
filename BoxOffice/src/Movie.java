@@ -1,3 +1,5 @@
+import java.net.URL;
+import java.util.Calendar;
 import java.util.Vector;
 
 /**
@@ -18,31 +20,35 @@ public class Movie {
 	public int debutYear;
 	public int debutWeek;
 	
-	public String dataCurrentTo;
+	public Calendar dataCurrentTo;
 	
-	public String releaseDate;
-	public String closeDate;
+	public Calendar releaseDate;
+	public Calendar closeDate;
 	
-	public String dayRange;
+	//public String dayRange; I don't even remember why this is here
 	
 	public Vector<String> date = new Vector<String>(100, 1);
 	public Vector<Integer> gross = new Vector<Integer>(100, 1);
 	public Vector<Integer> theatres = new Vector<Integer>(100, 1);
 	
+	public URL summaryPage;
+	public Vector<URL> releases = new Vector<URL>(100, 1);
+	
 	public int RTcriticScore = -100;
 	public int RTaudienceScore = -100;
 	public int RTnumCritics = -100;
 	
-	public int nominalGross;
-	public int realGross;
-	public int nominalLifetimeGross;
-	public int realLifetimeGross;
-	public int nominalWorldwideGross;
-	public int realWorldwideGross;
+	public long nominalGross;
+	public long realGross;
+	public long nominalLifetimeGross;
+	public long realLifetimeGross;
+	public long nominalWorldwideGross;
+	public long realWorldwideGross;
 	
 	public Vector<String> genres = new Vector<String>(6, 1);
 	
-	public int budget = -100;
+	public int NominalBudget;
+	public int realBudget;
 	
 	public int runtime;
 	
