@@ -297,8 +297,11 @@ public class Dataset {
 		raw = snip(raw, ".htm\">");
 		String rDate = mine(raw, "</a>");
 		Calendar releaseDate = parseDate(rDate);
-		raw = snip(raw, "Genre: <b>");
 		
+		raw = snip(raw, "Genre: <b>");
+		Vector<String> genreList = new Vector<String>(6, 1);
+		String genre1 = mine(raw, "</b>");
+		genreList.set(1, genre1);
 		
 		
 		
