@@ -303,6 +303,8 @@ public class Dataset {
 		String genre1 = mine(raw, "</b>");
 		genreList.set(1, genre1);
 		
+		raw = snip(raw, "Runtime: <b>");
+		String runtimeString = mine(raw, "</b>");
 		
 		
 		
@@ -414,6 +416,26 @@ public class Dataset {
 		Calendar cal = Calendar.getInstance();
 		cal.set(y, m, d);
 		return cal;
+	}
+	
+	public int getRuntime(String runtime)
+	{
+		if (runtime.indexOf("hr") == -1 || runtime.indexOf("min") == -1) return -1;
+		else
+		{
+			int totalMins = 0;
+			String hours = runtime.substring(runtime.indexOf("hr") - 2, runtime.indexOf(" "));
+			int hrs = Integer.parseInt(hours);
+			totalMins += hrs*60;
+			
+			runtime = snip(runtime, "hrs. ");
+			
+			String mins = mine(runtime, " ");
+			int minutes = Integer.parseInt(mins);
+			totalMins += minutes;
+			
+			return totalMins;
+		}
 	}
 	
 }
