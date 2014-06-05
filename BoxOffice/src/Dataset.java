@@ -279,8 +279,8 @@ public class Dataset {
 		raw = snip(raw, "Domestic Total Gross: <b>");
 		String nGross = mine(raw, "</b>");
 		int _nominalGross = parseDollarAmount(nGross);
-		String dLGross = " ";
-		String releasesLink = " ";
+		String dLGross = "";
+		String releasesLink = "";
 		int _domesticLifetimeGross = 0;
 		if (raw.indexOf("Domestic Lifetime Gross:") != -1)
 		{
@@ -305,6 +305,36 @@ public class Dataset {
 		
 		raw = snip(raw, "Runtime: <b>");
 		String runtimeString = mine(raw, "</b>");
+		int runtime = getRuntime(runtimeString);
+		
+		raw = snip(raw, "MPAA Rating: <b>");
+		String MPAArating = mine(raw, "</b>");
+		
+		raw = snip(raw, "Production Budget: <b>");
+		String productionBudget = mine(raw, "</b>");
+		int budget;
+		if (productionBudget.equals("N/A")) budget = -100;
+		else parseBudget(productionBudget);
+		
+		raw = snip(raw, "Weekend</a></li>");
+		raw = snip(raw, "<a href=\"");
+		String weeklyLink = mine(raw, "\">");
+		weeklyLink = bom + weeklyLink;
+		
+		//if (indexOf)
+		
+		raw = snip(raw, "<td width=\"35%\" align=\"right\">&nbsp;<b>");
+		String domestic = mine(raw, "</b>");
+		int domesticGross = parseDollarAmount(domestic);
+		
+		raw = snip(raw, "&nbsp;$");
+		String foreign = mine(raw, "</b></td>");
+		int foreignGross = parseDollarAmount(foreign);
+		
+		
+		
+		
+		
 		
 		
 		
@@ -438,4 +468,11 @@ public class Dataset {
 		}
 	}
 	
+	public int parseBudget(String bdgt)
+	{
+		if (bdgt.indexOf("$") > -1) bdgt = snip(bdgt, "$");
+		String num = mine(bdgt, " ");
+		int budget = Integer.parseInt(num);
+		return budget * 1000000;
+	}
 }
