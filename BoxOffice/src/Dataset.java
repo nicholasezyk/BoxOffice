@@ -321,7 +321,30 @@ public class Dataset {
 		String weeklyLink = mine(raw, "\">");
 		weeklyLink = bom + weeklyLink;
 		
-		//if (indexOf)
+		String releasesList = "";
+		String foreignList = "";
+		if (raw.indexOf("Releases</a>") != -1 && raw.indexOf("Foreign</a></li>") != -1)
+		{
+			raw = snip(raw, "Weekly</a></li>");
+			raw = snip(raw, "<li><a href=\"");
+			releasesList = bom + mine(raw, "\">Releases</a></li>");
+			
+			raw = snip(raw, "Releases</a>");
+			raw = snip(raw, "<li><a href=\"");
+			foreignList = bom + mine(raw, "\">Foreign</a></li>");
+		}
+		else if (raw.indexOf("Releases</a>") != -1)
+		{
+			raw = snip(raw, "Weekly</a></li>");
+			raw = snip(raw, "<li><a href=\"");
+			releasesList = bom + mine(raw, "\">Releases</a></li>");
+		}
+		else if (raw.indexOf("Foreign</a></li>") != -1)
+		{
+			raw = snip(raw, "Weekly</a></li>");
+			raw = snip(raw, "<li><a href=\"");
+			foreignList = bom + mine(raw, "\">Foreign</a></li>");
+		}
 		
 		raw = snip(raw, "<td width=\"35%\" align=\"right\">&nbsp;<b>");
 		String domestic = mine(raw, "</b>");
@@ -330,6 +353,13 @@ public class Dataset {
 		raw = snip(raw, "&nbsp;$");
 		String foreign = mine(raw, "</b></td>");
 		int foreignGross = parseDollarAmount(foreign);
+		
+		raw = snip(raw, "Domestic Summary</b></div>");
+		raw = snip(raw, "<td align=\"center\"><a href=\"");
+		
+		String openingWeekendLink = "";
+		openingWeekendLink = bom + mine(raw, "\"");
+		int debutWeek = getWeek(openingWeekendLink);
 		
 		
 		
@@ -474,5 +504,26 @@ public class Dataset {
 		String num = mine(bdgt, " ");
 		int budget = Integer.parseInt(num);
 		return budget * 1000000;
+	}
+	
+	public String getYear(String link)
+	{
+		if (link.indexOf("?yr=") == -1) return "1889";
+		else
+		{
+			link = snip(link, "?yr=");
+			return mine(link, "&");
+			
+		}
+	}
+	
+	public String getWeek(String link)
+	{
+		if (link.indexOf("?wknd=") == -1) return "01";
+		else
+		{
+			link = snip(link, "?wknd=");
+			return mine(link, "&");
+		}
 	}
 }
