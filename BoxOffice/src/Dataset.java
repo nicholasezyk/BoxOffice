@@ -359,7 +359,17 @@ public class Dataset {
 		
 		String openingWeekendLink = "";
 		openingWeekendLink = bom + mine(raw, "\"");
-		int debutWeek = getWeek(openingWeekendLink);
+		String debutWeek = getWeek(openingWeekendLink);
+		String debutYear = getYear(openingWeekendLink);
+		
+		String genreSec = mine(raw, "</table></div></div><div class=\"mp_box\">");
+		genreSec = snip(genreSec, "<tr><th>Genre</th>");
+		genreSec = snip(genreSec, "<th>Rank</th></tr>");
+		while (genreSec.indexOf("<font size=\"2\">") != -1)
+		{
+			genreSec = snip(genreSec, "<font size=\"2\">");
+		}
+		
 		
 		
 		
