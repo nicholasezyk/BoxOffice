@@ -15,10 +15,10 @@ import java.util.Vector;
 public class Movie {
 	public boolean nonInit;
 	
-	public String title;
+	public static int count;
+	public int ID;
 	
-	public int debutYear;
-	public int debutWeek;
+	public String title;
 	
 	public Calendar dataCurrentTo;
 	
@@ -54,7 +54,7 @@ public class Movie {
 	
 	public BTernary flop = new BTernary(0);
 	
-	public String studio;
+	public String distributor;
 	
 	public Movie()
 	{
@@ -67,8 +67,43 @@ public class Movie {
 		
 		title = n;
 		
+		count++;
+		this.ID = count;
+		
 		Dataset.catalogMovies.put(n, this);
 		System.out.println("Added to library: " + n);
+	}
+	
+	public void setGross(int g, Calendar c)
+	{
+		this.nominalGross = g;
+		if (c.YEAR > 1982 && c.YEAR < 2014)
+		{
+			this.realGross = (int) (g * Inflator.inflate(c.YEAR));
+		}
+	}
+	
+	public void setLifetimeGross(int l, Calendar c)
+	{
+		this.nominalLifetimeGross = l;
+		if (c.YEAR > 1982 && c.YEAR < 2014)
+		{
+			this.realGross = (int) (l * Inflator.inflate(c.YEAR));
+		}
+	}
+	
+	public void setWorldwideGross(int w, Calendar c)
+	{
+		this.nominalWorldwideGross = w;
+		if (c.YEAR > 1982 && c.YEAR < 2014)
+		{
+			this.realGross = (int) (w * Inflator.inflate(c.YEAR));
+		}
+	}
+	
+	public void setDistributor(String d)
+	{
+		this.distributor = d;
 	}
 
 	

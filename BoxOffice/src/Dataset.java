@@ -360,7 +360,9 @@ public class Dataset {
 		String openingWeekendLink = "";
 		openingWeekendLink = bom + mine(raw, "\"");
 		String debutWeek = getWeek(openingWeekendLink);
+		int dWeek = Integer.parseInt(debutWeek);
 		String debutYear = getYear(openingWeekendLink);
+		int dYear = Integer.parseInt(debutYear);
 		
 		String genreSec = mine(raw, "</table></div></div><div class=\"mp_box\">");
 		genreSec = snip(genreSec, "<tr><th>Genre</th>");
@@ -368,6 +370,21 @@ public class Dataset {
 		while (genreSec.indexOf("<font size=\"2\">") != -1)
 		{
 			genreSec = snip(genreSec, "<font size=\"2\">");
+			genreSec = snip(genreSec, "<b>");
+			String g = mine(genreSec, "</b>");
+			
+			genreSec = snip(genreSec, "<b>");
+			int n = Integer.parseInt(mine(genreSec, "</b>"));
+			
+			genreList.set(n, g);
+			
+			/**
+			 * @todo Put something in place to quantify the many, MANY rankings down on the bottom of the page.
+			 */
+			
+			//instantiation and filling in of the movie value
+			//filling of the movie's weeks and of the Week value in question.
+					
 		}
 		
 		
