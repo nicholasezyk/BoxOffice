@@ -276,9 +276,11 @@ public class Dataset {
 		filmTitle = mine(raw, "</b>");
 		
 		Movie mov = new Movie(filmTitle);
+		
 		raw = snip(raw, "Domestic Total Gross: <b>");
 		String nGross = mine(raw, "</b>");
 		int _nominalGross = parseDollarAmount(nGross);
+		
 		String dLGross = "";
 		String releasesLink = "";
 		int _domesticLifetimeGross = 0;
@@ -294,9 +296,16 @@ public class Dataset {
 		raw = snip(raw, "Distributor: <b><a href=\"");
 		String distributorLink = mine(raw, "\">");
 		String _distributor = mine(raw, "</a>");
+		mov.setDistributor(_distributor);
+		
 		raw = snip(raw, ".htm\">");
 		String rDate = mine(raw, "</a>");
 		Calendar releaseDate = parseDate(rDate);
+		mov.setGross(_nominalGross, releaseDate);
+		if (_domesticLifetimeGross != 0)
+		{
+			mov.setLifetimeGross(_domesticLifetimeGross, releaseDate);
+		}
 		
 		raw = snip(raw, "Genre: <b>");
 		Vector<String> genreList = new Vector<String>(6, 1);

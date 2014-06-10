@@ -47,7 +47,7 @@ public class Movie {
 	
 	public Vector<String> genres = new Vector<String>(6, 1);
 	
-	public int NominalBudget;
+	public int nominalBudget;
 	public int realBudget;
 	
 	public int runtime;
@@ -55,6 +55,7 @@ public class Movie {
 	public BTernary flop = new BTernary(0);
 	
 	public String distributor;
+	public String MPAArating;
 	
 	public Movie()
 	{
@@ -105,7 +106,35 @@ public class Movie {
 	{
 		this.distributor = d;
 	}
-
+	
+	public void setGenres(Vector<String> gs)
+	{
+		this.genres = (Vector<String>) gs.clone();
+	}
+	
+	public void setRuntime(int run)
+	{
+		this.runtime = run;
+	}
+	
+	public void setMPAARating(String rating)
+	{
+		this.MPAArating = rating;
+	}
+	
+	public void setBudget(int b, Calendar c)
+	{
+		this.nominalBudget = b;
+		if (c.YEAR > 1982 && c.YEAR < 2014)
+		{
+			this.realBudget = (int) (b * Inflator.inflate(c.YEAR));
+		}
+	}
+	
+	public void setSummaryPage(URL sum)
+	{
+		this.summaryPage = sum;
+	}
 	
 	
 }
