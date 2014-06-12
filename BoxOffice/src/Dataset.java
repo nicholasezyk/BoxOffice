@@ -315,15 +315,21 @@ public class Dataset {
 		raw = snip(raw, "Runtime: <b>");
 		String runtimeString = mine(raw, "</b>");
 		int runtime = getRuntime(runtimeString);
+		mov.setRuntime(runtime);
 		
 		raw = snip(raw, "MPAA Rating: <b>");
-		String MPAArating = mine(raw, "</b>");
+		String MPAARating = mine(raw, "</b>");
+		mov.setMPAARating(MPAARating);
 		
 		raw = snip(raw, "Production Budget: <b>");
 		String productionBudget = mine(raw, "</b>");
 		int budget;
 		if (productionBudget.equals("N/A")) budget = -100;
-		else parseBudget(productionBudget);
+		else
+		{
+			budget = parseBudget(productionBudget);
+			mov.setBudget(budget, releaseDate);
+		}
 		
 		raw = snip(raw, "Weekend</a></li>");
 		raw = snip(raw, "<a href=\"");
