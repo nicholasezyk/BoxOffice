@@ -336,6 +336,8 @@ public class Dataset {
 		String weeklyLink = mine(raw, "\">");
 		weeklyLink = bom + weeklyLink;
 		
+		pullWeeklyData(weeklyLink);
+		
 		String releasesList = "";
 		String foreignList = "";
 		if (raw.indexOf("Releases</a>") != -1 && raw.indexOf("Foreign</a></li>") != -1)
@@ -566,6 +568,21 @@ public class Dataset {
 		{
 			link = snip(link, "?wknd=");
 			return mine(link, "&");
+		}
+	}
+	
+	public void pullWeeklyData(String w)
+	{
+		String data = "";
+		try
+		{
+			data = GrabHTML.pull(new URL(w));
+		} catch (MalformedURLException we)
+		{
+			
+		} catch (Exception me)
+		{
+			
 		}
 	}
 }
